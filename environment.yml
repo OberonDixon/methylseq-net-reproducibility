@@ -1,0 +1,21 @@
+name: methylseqnet-reproducibility
+channels:
+  - nanoporetech
+  - nvidia
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.11
+  - pip>=24.0
+  - bioconda::htslib>=1.21
+  - bioconda::whatshap>=2.4
+  - bioconda::dipcall>=0.3
+  - bioconda::bcftools>=1.21
+  - bioconda::pbmm2>=26.1.0
+  - bioconda::isoseq>=4.3.0
+  - bioconda::pb-cpg-tools>=3.0.0
+  - bioconda::ucsc-twobittofa>=469
+  - bioconda::ucsc-maskoutfa>=472
+  - pip:
+    - -e .
