@@ -3,7 +3,7 @@
 __pycache__/
 *.pyc
 build/
-methylseqnet_repro/configs/paths.toml
+methylseqnet_repro/paths.toml
 .env
 dist/
 *.log

@@ -1,0 +1,323 @@
+TF name,Call,comment,Justification,AP-1 bool,Pioneer bool,Master regulator bool,Call Set,Simple Call
+ALX3,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+ARNT2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ARNTL,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ATF2,MethylMinus,,"Known pioneer TF, AP-1 complex",True,True,False,"('MethylMinus',)",MethylMinus
+ATF3,MethylMinus,concordant,"Known pioneer TF, AP-1 complex",True,True,False,"('MethylMinus',)",MethylMinus
+ATF4,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+ATF6,MethylMinus,effect revealed by bisulfite,"Known pioneer TF, AP-1 complex",True,True,False,"('MethylMinus',)",MethylMinus
+ATF7,MethylMinus,,"Known pioneer TF, AP-1 complex",True,True,False,"('MethylMinus',)",MethylMinus
+BARHL2,MethylMinus,low complexity motif,,False,False,False,"('MethylMinus',)",MethylMinus
+BCL6,MethylMinus,concordant,Known master regulator,False,False,True,"('Little effect and MethylMinus', 'MethylMinus')",Multiple
+BCL6,Little effect and MethylMinus,,Known master regulator,False,False,True,"('Little effect and MethylMinus', 'MethylMinus')",Multiple
+BCL6B,MethylMinus,concordant,,False,False,False,"('Little effect and MethylMinus', 'MethylMinus')",Multiple
+BCL6B,Little effect and MethylMinus,concordant,,False,False,False,"('Little effect and MethylMinus', 'MethylMinus')",Multiple
+BHLHE40,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+BHLHE41,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+BSX,MethylMinus,low complexity motif,,False,False,False,"('MethylMinus',)",MethylMinus
+CDC5L,,,Known master regulator,False,False,True,"(nan,)",
+CDX1,,,Known master regulator,False,False,True,"(nan,)",
+CDX2,,,Known master regulator,False,False,True,"(nan,)",
+CDX4,MethylPlus,concordant,Known master regulator,False,False,True,"('MethylPlus',)",MethylPlus
+CEBPA,,,"Known pioneer TF, known master regulator",False,True,True,"(nan,)",
+CEBPB,MethylPlus,effect revealed by bisulfite,"Known pioneer TF, known master regulator",False,True,True,"('MethylPlus',)",MethylPlus
+CEBPD,Little effect,,,False,False,False,"('Little effect',)",Little effect
+CEBPE,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+CEBPG,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+CG1,,,Synthetic CG motif of length 2,False,False,False,"(nan,)",
+CG10,,,Synthetic CG motif of length 20,False,False,False,"(nan,)",
+CG2,,,Synthetic CG motif of length 4,False,False,False,"(nan,)",
+CG3,,,Synthetic CG motif of length 6,False,False,False,"(nan,)",
+CG5,,,Synthetic CG motif of length 10,False,False,False,"(nan,)",
+CLOCK,MethylMinus and MethylPlus,concordant,,False,False,False,"('MethylMinus and MethylPlus',)",MethylMinus and MethylPlus
+CREB1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+CREB3,MethylMinus,,,False,False,False,"('MethylMinus',)",MethylMinus
+CREB3,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+CREB3L1,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus', 'MethylMinus and MethylPlus')",Multiple
+CREB3L1,MethylMinus,,,False,False,False,"('MethylMinus', 'MethylMinus and MethylPlus')",Multiple
+CREB3L1,MethylMinus and MethylPlus,,,False,False,False,"('MethylMinus', 'MethylMinus and MethylPlus')",Multiple
+CREB5,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+CREM,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+CTCF,,,Specifically interested in the interaction of CTCF with methylation,False,False,False,"(nan,)",
+CUX1,MethylMinus,,,False,False,False,"('MethylMinus',)",MethylMinus
+DMRTC2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+E2F2,Little effect,concordant,,False,False,False,"('MethylMinus', 'Little effect')",Multiple
+E2F2,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus', 'Little effect')",Multiple
+E2F3,Little effect,concordant,,False,False,False,"('Little effect',)",Little effect
+E2F4,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+E2F7,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+E2F8,Little effect,concordant,,False,False,False,"('Little effect',)",Little effect
+EGR1,Little effect,concordant,,False,False,False,"('Little effect',)",Little effect
+EGR2,Little effect,concordant,,False,False,False,"('Little effect',)",Little effect
+EGR3,Little effect,concordant,,False,False,False,"('Little effect',)",Little effect
+EGR4,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+ELF1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ELF2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ELF3,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ELF4,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ELF5,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ELK1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ELK3,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+EN1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+EN2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+ERG,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+ERG,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ESR1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+ESRRB,,,Known pioneer TF,False,True,False,"(nan,)",
+ETS2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ETV1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ETV2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ETV3,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+ETV3,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ETV4,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ETV5,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+FEV,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+FLI1,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+FLI1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+FOS,MethylMinus,concordant,"Known pioneer TF, AP-1 complex",True,True,False,"('MethylMinus',)",MethylMinus
+FOSB,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+FOSL1,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+FOSL2,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+FOXA1,,,Known pioneer TF,False,True,False,"(nan,)",
+FOXA2,,,Known pioneer TF,False,True,False,"(nan,)",
+FOXA3,,,Known pioneer TF,False,True,False,"(nan,)",
+FOXG1,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+FOXJ3,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+FOXP3,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+GABPA,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+GATA1,,,Known pioneer TF,False,True,False,"(nan,)",
+GATA2,,,Known pioneer TF,False,True,False,"(nan,)",
+GATA3,MethylPlus,effect revealed by bisulfite,Known pioneer TF,False,True,False,"('MethylPlus',)",MethylPlus
+GATA4,,,Known pioneer TF,False,True,False,"(nan,)",
+GATA5,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+GBX2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+GCM1,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+GCM2,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+GFI1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+GLI2,Little effect and MethylMinus,concordant,,False,False,False,"('Little effect and MethylMinus',)",Little effect and MethylMinus
+GLIS1,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+GLIS2,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+GMEB1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+GMEB2,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+GRHL1,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+GSX2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HES1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+HES2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+HES5,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+HES7,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+HEY1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+HEY2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+HLF,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+HNF1A,,,Known master regulator,False,False,True,"(nan,)",
+HNF1B,,,Known master regulator,False,False,True,"(nan,)",
+HNF4A,,,Known master regulator,False,False,True,"(nan,)",
+HOXA1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXA11,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXA13,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXA2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXA4,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXA5,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXA6,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXA7,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB13,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB5,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB6,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB7,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB8,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXB9,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXC10,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXC11,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXC12,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXC13,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXC8,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD10,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD11,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD12,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD13,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD4,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD8,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+HOXD9,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+HSF1,inconclusive,inconclusive direction,Known master regulator,False,False,True,"('inconclusive',)",inconclusive
+HSF2,MethylMinus and MethylPlus,concordant,Known master regulator,False,False,True,"('MethylMinus and MethylPlus',)",MethylMinus and MethylPlus
+HSFY1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+HSFY2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+IRF1,,,Known master regulator,False,False,True,"(nan,)",
+IRF2,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+IRF4,Little effect and MethylPlus,effect revealed by bisulfite,Known master regulator,False,False,True,"('Little effect and MethylPlus',)",Little effect and MethylPlus
+IRF5,Little effect,effect revealed by bisulfite,,False,False,False,"('Little effect',)",Little effect
+IRF6,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+IRF7,MethylMinus,concordant,Known master regulator,False,False,True,"('MethylMinus',)",MethylMinus
+IRF8,,,Known master regulator,False,False,True,"(nan,)",
+IRF9,MethylPlus and Little effect,effect revealed by bisulfite,,False,False,False,"('MethylPlus and Little effect',)",MethylPlus and Little effect
+IRX1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+IRX5,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+ISX,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+JDP2,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+JUN,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+JUNB,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+JUND,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+KLF12,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+KLF12,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+KLF13,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+KLF14,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+KLF15,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+KLF16,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+KLF4,Little effect,,Known pioneer TF,False,True,False,"('Little effect',)",Little effect
+KLF5,,,Known pioneer TF,False,True,False,"(nan,)",
+KLF6,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+LBX2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+LEF1,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+LHX5,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+LHX6,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+LHX9,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+LMX1A,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+LMX1B,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+MAFF,MethylMinus,,"Known pioneer TF, AP-1 complex",True,True,False,"('MethylMinus',)",MethylMinus
+MAFG,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+MAFK,,,"Known pioneer TF, AP-1 complex",True,True,False,"(nan,)",
+MAX,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+MEIS2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+MEIS3,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+MITF,,,Known master regulator,False,False,True,"(nan,)",
+MLX,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+MSX1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+MSX2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+MTF1,Little effect,concordant,,False,False,False,"('Little effect',)",Little effect
+MYBL2,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+MYCN,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+MYF6,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+MYOD1,Little effect,,,False,False,False,"('Little effect',)",Little effect
+MYOG,Little effect,,,False,False,False,"('Little effect',)",Little effect
+NANOG,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+NEUROD1,,,Known pioneer TF,False,True,False,"(nan,)",
+NFAT5,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NFATC1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NFATC1,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+NFATC2,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+NFATC2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NFATC3,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NFATC3,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+NFYA,,,Known pioneer TF,False,True,False,"(nan,)",
+NFYB,,,Known pioneer TF,False,True,False,"(nan,)",
+NFYC,,,Known pioneer TF,False,True,False,"(nan,)",
+NHLH1,Little effect,,,False,False,False,"('Little effect',)",Little effect
+NKX2-3,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+NKX2-5,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+NKX3-1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+NKX3-2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+NPAS2,MethylMinus and MethylPlus,concordant,,False,False,False,"('MethylMinus and MethylPlus',)",MethylMinus and MethylPlus
+NR1I3,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NR2C1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NR2F1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NR2F1,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+NR2F6,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+NR3C2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+ONECUT1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ONECUT2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ONECUT3,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+OSR1,Little effect,effect revealed by bisulfite,,False,False,False,"('Little effect',)",Little effect
+OSR2,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+OVOL1,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+PAX1,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+PAX2,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+PAX3,MethylMinus and Little effect,,,False,False,False,"('MethylMinus', 'MethylPlus', 'MethylMinus and Little effect')",Multiple
+PAX3,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylMinus', 'MethylPlus', 'MethylMinus and Little effect')",Multiple
+PAX3,MethylMinus,,,False,False,False,"('MethylMinus', 'MethylPlus', 'MethylMinus and Little effect')",Multiple
+PAX4,Little effect,,,False,False,False,"('Little effect',)",Little effect
+PAX5,,,Known master regulator,False,False,True,"(nan,)",
+PAX6,MethylPlus,effect revealed by bisulfite,Known master regulator,False,False,True,"('MethylPlus',)",MethylPlus
+PAX7,MethylMinus,low complexity motif,,False,False,False,"('MethylMinus', 'MethylPlus', 'MethylMinus and Little effect')",Multiple
+PAX7,MethylMinus and Little effect,,,False,False,False,"('MethylMinus', 'MethylPlus', 'MethylMinus and Little effect')",Multiple
+PAX7,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylMinus', 'MethylPlus', 'MethylMinus and Little effect')",Multiple
+PAX8,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+PAX9,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+PBX1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+PDX1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+PKNOX1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+PKNOX2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+POU2F2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+POU2F3,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+POU3F1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+POU3F2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+POU3F4,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+POU5F1,MethylPlus,concordant,Known pioneer TF,False,True,False,"('MethylPlus',)",MethylPlus
+PPARD,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+PRDM4,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+PROX1,MethylMinus,,,False,False,False,"('MethylMinus',)",MethylMinus
+RARA,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+RARB,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+RARG,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+RFX5,MethylPlus,concordant,,False,False,False,"('MethylPlus', 'Little effect')",Multiple
+RFX5,Little effect,,,False,False,False,"('MethylPlus', 'Little effect')",Multiple
+RORB,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+RUNX1,,,Known master regulator,False,False,True,"(nan,)",
+RUNX2,MethylMinus,concordant,Known master regulator,False,False,True,"('MethylMinus',)",MethylMinus
+RUNX3,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+RXRB,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+RXRG,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+SCRT1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+SCRT2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+SNAI1,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+SNAI2,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+SOHLH2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+SOX2,,,Known master regulator,False,False,True,"(nan,)",
+SOX3,,,Known master regulator,False,False,True,"(nan,)",
+SOX4,,,Known master regulator,False,False,True,"(nan,)",
+SOX5,,,Known master regulator,False,False,True,"(nan,)",
+SOX6,,,Known master regulator,False,False,True,"(nan,)",
+SOX9,,,Known master regulator,False,False,True,"(nan,)",
+SP1,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+SP2,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+SP3,Little effect,,,False,False,False,"('Little effect',)",Little effect
+SPDEF,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+SPI1,,,Known pioneer TF,False,True,False,"(nan,)",
+SPIB,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+SREBF1,MethylMinus,concordant,Known master regulator,False,False,True,"('MethylMinus',)",MethylMinus
+SREBF1,MethylMinus,,Known master regulator,False,False,True,"('MethylMinus',)",MethylMinus
+SREBF2,,,Known master regulator,False,False,True,"(nan,)",
+TBX1,,,Known master regulator,False,False,True,"(nan,)",
+TBX20,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+TBX21,,,Known master regulator,False,False,True,"(nan,)",
+TBX5,,,Known master regulator,False,False,True,"(nan,)",
+TCF4,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+TCF7L1,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+TCFL5,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+TFCP2,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+TFCP2L1,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+TFE3,MethylMinus,concordant,Known master regulator,False,False,True,"('MethylMinus',)",MethylMinus
+TFEB,,,Known master regulator,False,False,True,"(nan,)",
+TFEC,MethylMinus,concordant,Known master regulator,False,False,True,"('MethylMinus',)",MethylMinus
+TGIF2LX,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+TGIF2LY,MethylPlus,concordant,,False,False,False,"('MethylPlus',)",MethylPlus
+THRB,MethylPlus,,,False,False,False,"('MethylPlus',)",MethylPlus
+TP53,,,Known pioneer TF,False,True,False,"(nan,)",
+UBP1,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+UNCX,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+UNIFORMRANDOM10,,,Synthetic baseline motif with uniform random PWM of length 10,False,False,False,"(nan,)",
+UNIFORMRANDOM15,,,Synthetic baseline motif with uniform random PWM of length 15,False,False,False,"(nan,)",
+UNIFORMRANDOM20,,,Synthetic baseline motif with uniform random PWM of length 20,False,False,False,"(nan,)",
+UNIFORMRANDOM5,,,Synthetic baseline motif with uniform random PWM of length 5,False,False,False,"(nan,)",
+USF1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+USF2,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+VSX1,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+VSX2,MethylPlus,low complexity motif,,False,False,False,"('MethylPlus',)",MethylPlus
+XBP1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+YY1,inconclusive,inconclusive direction,,False,False,False,"('inconclusive', 'MethylMinus')",Multiple
+YY1,MethylMinus,,,False,False,False,"('inconclusive', 'MethylMinus')",Multiple
+YY2,MethylPlus and MethylMinus,concordant,,False,False,False,"('MethylPlus and MethylMinus',)",MethylPlus and MethylMinus
+ZBED1,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ZBTB7A,MethylMinus,effect revealed by bisulfite,,False,False,False,"('MethylMinus',)",MethylMinus
+ZBTB7B,MethylMinus,concordant,,False,False,False,"('MethylMinus',)",MethylMinus
+ZIC4,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+ZIC5,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+ZNF274,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+ZNF32,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+ZNF524,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+ZNF713,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+ZNF740,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+ZNF76,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive
+ZNF784,MethylPlus,effect revealed by bisulfite,,False,False,False,"('MethylPlus',)",MethylPlus
+ZSCAN4,inconclusive,inconclusive direction,,False,False,False,"('inconclusive',)",inconclusive

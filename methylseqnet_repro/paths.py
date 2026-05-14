@@ -2,7 +2,7 @@ import tomllib
 from pathlib import Path
 from importlib.resources import files
 
-_CONFIG_DIR = files("methylseqnet_repro") / "configs"
+_CONFIG_DIR = files("methylseqnet_repro")
 _CONFIG_PATH = _CONFIG_DIR / "paths.toml"
 _EXAMPLE_PATH = _CONFIG_DIR / "paths.toml.example"
 
