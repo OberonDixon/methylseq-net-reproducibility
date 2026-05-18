@@ -1,7 +1,11 @@
 # MethylSeqNet Reproducibility
 A collection of scripts and notebooks to re-generate results and figures for MethylSeqNet
 
-## Installation
+## Hardware requirements
+
+Running the MethylSeqNet pipeline end-to-end requires about 12TB of disk space (mostly for saving whole-test-set intermediate activations for dozens of trained models), a high-memory machine with 90GB of RAM (peak memory usage is for processing large numbers of motif insertion synthetic samples), and at least one GPU with at least 20GB of VRAM (the main MethylSeqNet model configurations however need under 10GB of VRAM to train). VRAM and RAM requirements are not simultaneous; GPU operations such as train/predict can run on nodes with much less than 90GB of RAM and pre/post processing on high-RAM machines does not require a GPU. 
+
+## Installation and setup
 
 Clone the repository and navigate into the top-level directory containing `environment.yml` and `pyproject.toml`. 
 
@@ -27,6 +31,10 @@ And you can update while removing any unnecessary dependencies:
 ```
 conda env update -f environment.yml --prune
 ```
+
+### Specify paths for key data
+
+Before running any of the pipeline below, specify the directory where files will download/generate. Make a copy of `methylseqnet_repro/paths.toml.example` named `paths.toml` and provide valid paths for all data directories. These do not need to exist already, but they do need to have write access for the active user and sufficient disk space (see Requirements).
 
 ## Pipeline
 
