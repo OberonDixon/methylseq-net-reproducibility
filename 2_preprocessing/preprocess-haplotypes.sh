@@ -14,3 +14,4 @@ CONFIG_DIR=$(methylseqnet-repro-path configs)
 
 methylseqnet-preprocess --config "$CONFIG_DIR/preprocess/preprocess_borzoi_longread.gin"
 methylseqnet-preprocess --config "$CONFIG_DIR/preprocess/preprocess_borzoi_longread_chrX.gin"
+methylseqnet-preprocess --config "$CONFIG_DIR/preprocess/preprocess_borzoi_longread_haplotyped.gin"

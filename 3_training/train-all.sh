@@ -58,4 +58,4 @@ CONFIG_FILES=(
 )
 CONFIG_FILE=${CONFIG_FILES[$SLURM_ARRAY_TASK_ID]}
 UNIQUE_IDENTIFIER="slurm${SLURM_ARRAY_JOB_ID}task${SLURM_ARRAY_TASK_ID}"
-methylseqnet-train --config $CONFIG_FILE --unique_identifier $UNIQUE_IDENTIFIER --batch_size 1
+methylseqnet-train --config $CONFIG_FILE --unique-identifier $UNIQUE_IDENTIFIER --batch-size 1

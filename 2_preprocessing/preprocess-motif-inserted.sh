@@ -27,9 +27,9 @@ methylseqnet-insert-motifs \
     $ANNOTATIONS_DIR \
     $PREPROCESSED/motif_insertion/peaks/random_celltype_peaks_cpg.05-.15_10cts \
     $PREPROCESSED/motif_insertion/fastas/motif_inserted_random_celltype_cpg.05-.15_10cts_peaks_2048 \
-    --INPUT_LEN 16384 \
-    --SHUFFLE_LEN 2048 \
-    --TFS_FILE "${CONFIG_DIR}/transcription_factors.txt" \
-    --OVERWRITE
+    --input-len 16384 \
+    --shuffle-len 2048 \
+    --tfs-file "${CONFIG_DIR}/transcription_factors.txt" \
+    --overwrite
 
 methylseqnet-preprocess --config "$CONFIG_DIR/preprocess/preprocess_motif_insert_alltypes_cpg.05-.15_peaks_10cts.gin"
