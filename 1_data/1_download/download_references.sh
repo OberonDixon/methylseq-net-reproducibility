@@ -46,13 +46,13 @@ wget -O "$ANNOTATIONS_DIR/hg38.archetype_motifs.v1.0.bed.gz" \
 wget -O "$ANNOTATIONS_DIR/hg38.archetype_motifs.v1.0.bed.gz.tbi" \
     https://resources.altius.org/~jvierstra/projects/motif-clustering/releases/v1.0/hg38.archetype_motifs.v1.0.bed.gz.tbi
 
-wget -O "$ANNOTATIONS_DIR/41586_2022_5580_MOESM4_ESM.xlsx" \
-    https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-022-05580-6/MediaObjects/41586_2022_5580_MOESM4_ESM.xlsx
-
-wget -O "$ANNOTATIONS_DIR/tabula_sapiens_2.0_table4_TFs-by-celltype.xlsx" \
-    "https://www.biorxiv.org/content/biorxiv/early/2025/08/27/2024.12.03.626516/DC21/embed/media-21.xlsx?download=true"
-
 # Copy pre-packaged annotations
+
+cp ../../reference/41586_2022_5580_MOESM4_ESM.xlsx "$ANNOTATIONS_DIR/41586_2022_5580_MOESM4_ESM.xlsx"
+
+cp ../../reference/tabula_sapiens_2.0_table4_TFs-by-celltype.xlsx "$ANNOTATIONS_DIR/tabula_sapiens_2.0_table4_TFs-by-celltype.xlsx"
+
+cp ../../reference/NIHMS828671-supplement-2.xlsx "$ANNOTATIONS_DIR/NIHMS828671-supplement-2.xlsx"
 
 cp ../../reference/transcription_factor_metadata.csv "$ANNOTATIONS_DIR/transcription_factor_metadata.csv"
 
