@@ -29,7 +29,7 @@ Pancreas-Islet-Endothel	"Endothelial General 1,Endothelial General 2,Endothelial
 Epidermal-Keratinocytes	"Keratinocyte 1,Keratinocyte 2"		2	32	4	"CNhs10879,CNhs11064"	"Keratinocyte - oral, donor1,Keratinocyte - epidermal, donor1"	128	384	4		
 Colon-Left-Endocrine			2	32	0			128	384	0		
 Colon-Left-Epithelial	"Colon Epithelial 1,Colon Epithelial 2,Colon Epithelial 3"		2	32	4			128	384	0		
-Breast-Luminal-Epithel	"Mammary Luminal Epi 1,Mammary Luminal Epi 2"		2	32	0	CNhs11382	"Mammary Epithelial Cell, donor2"	128	384	4		
+Breast-Luminal-Epithel	"Mammary Luminal Epi 1,Mammary Luminal Epi 2"		2	32	4	CNhs11382	"Mammary Epithelial Cell, donor2"	128	384	4		
 Liver-Macrophages	Macrophage General		2	32	2	"CNhs10861,CNhs11899,CNhs12003"	"Macrophage - monocyte derived, donor1,Macrophage - monocyte derived, donor2,Macrophage - monocyte derived, donor3"	128	384	2		
 Blood-Monocytes			2	32	0	"CNhs13224,CNhs13541,CNhs13216,CNhs13207,CNhs13208"	"CD14-CD6 Monocytes, Donor 1 and 2"	128	384	4		
 Skeletal-Muscle	"Type I Skeletal Myocyte,Type II Skeletal Myocyte"		2	32	4	CNhs10869	"Skeletal Muscle Satellite Cells, donor1"	128	384	5		
