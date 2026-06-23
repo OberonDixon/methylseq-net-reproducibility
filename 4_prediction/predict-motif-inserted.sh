@@ -52,5 +52,6 @@ DATASET_PATH="$PREPROCESSED/motif_insertion/preprocessed/${CELL_TYPES[$CELL_IDX]
 echo "Running model ${MODEL_IDENTIFIERS[$CONFIG_IDX]} on dataset $DATASET_PATH with arguments: ${KWARGS[@]}"
 
 methylseqnet-predict --model-identifier ${MODEL_IDENTIFIERS[$CONFIG_IDX]} \
+    --model-source local \
     --dataset-files "$DATASET_PATH" \
     "${KWARGS[@]}"

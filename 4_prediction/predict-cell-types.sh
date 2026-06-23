@@ -64,5 +64,6 @@ source activate methylseqnet-reproducibility
 PREPROCESSED=$(methylseqnet-repro-path preprocessed_datasets)
 
 methylseqnet-predict $KWARGS \
+    --model-source local \
     --dataset-keys atlas \
     --dataset-files $PREPROCESSED/atlas/fold3.h5

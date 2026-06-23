@@ -68,5 +68,6 @@ PREPROCESSED=$(methylseqnet-repro-path preprocessed_datasets)
 #     --dataset-files $PREPROCESSED/gm12878/fold3.h5
 
 methylseqnet-predict $KWARGS \
+    --model-source local \
     --dataset-keys longread \
     --dataset-files $PREPROCESSED/gm12878_haplotyped/fold3.h5
