@@ -1,7 +1,7 @@
 initial_filters = 512
 dilated_residual_filters = 512
-embedding_dim = 1920
-embedding_pool = 4
+embedding_dim = 3072
+embedding_pool = 1
 model_tasks = 65
 cell_types = 43
 
@@ -25,7 +25,7 @@ integrate_embs/methylseqnet.layers.ConvBlock.kernel_size=1
 integrate_embs/methylseqnet.layers.ConvBlock.pool_size=1
 
 methylseqnet.layers.DilatedResidual.in_channels=%initial_filters
-methylseqnet.layers.DilatedResidual.filters=%dilated_residual_filters 
+methylseqnet.layers.DilatedResidual.filters=%dilated_residual_filters
 methylseqnet.layers.DilatedResidual.kernel_size=3
 methylseqnet.layers.DilatedResidual.rate_mult=2
 methylseqnet.layers.DilatedResidual.repeat=5
@@ -56,11 +56,11 @@ embeddings_to_methyl_rep/methylseqnet.layers.ConvFinal.pool_class=@AvgPool1d
 torch.optim.Adam.lr=0.002
 torch.optim.Adam.betas=(0.9,0.999)
 
-methylseqnet.pretrained.borzoi_pytorch.remove_crop=False
-methylseqnet.pretrained.borzoi_pytorch.reinitialize=False
-methylseqnet.pretrained.borzoi_pytorch.pretrained_seq_model_weights='johahi/borzoi-replicate-0'
+methylseqnet.pretrained.alphagenome_pytorch.remove_crop=False
+methylseqnet.pretrained.alphagenome_pytorch.reinitialize=False
+methylseqnet.pretrained.alphagenome_pytorch.pretrained_seq_model_weights='model_fold_1.safetensors'
 
-methylseqnet.model.ConditionedSeqNN.sequence_encoder = [@borzoi_pytorch]
+methylseqnet.model.ConditionedSeqNN.sequence_encoder = [@alphagenome_pytorch]
 methylseqnet.model.ConditionedSeqNN.conditioning_operation = 'multiply'
 methylseqnet.model.ConditionedSeqNN.embeddings_to_conditioning_state_rep = [
     @embeddings_to_methyl_rep/ConvFinal,
@@ -83,7 +83,7 @@ methylseqnet.model.ConditionedSeqNN.output_head = [
     @scaleup_block/ConvFinal,
     @Softplus,
 ]
-methylseqnet.model.ConditionedSeqNN.true_conditioning_state_weight=1.0
+methylseqnet.model.ConditionedSeqNN.true_conditioning_state_weight=0.0
 methylseqnet.model.ConditionedSeqNN.train_stages={
             'train-factorized-pretrained-embeddings':{
                 'grad_dict':{
@@ -95,7 +95,8 @@ methylseqnet.model.ConditionedSeqNN.train_stages={
 methylseqnet.model.ConditionedSeqNN.out_tracks=%model_tasks
 methylseqnet.model.ConditionedSeqNN.regression=True
 methylseqnet.model.ConditionedSeqNN.crop_off_output=0
-methylseqnet.model.ConditionedSeqNN.crop_off_conditioning_input=163840
+#  AlphaGenome has no cropping
+methylseqnet.model.ConditionedSeqNN.crop_off_conditioning_input=0
 methylseqnet.model.ConditionedSeqNN.concat_pretrained_embeddings_at={}
 methylseqnet.model.ConditionedSeqNN.conditioning_state_rep_loss_weight=0.1
 methylseqnet.model.ConditionedSeqNN.seq_reps_orthogonality_loss_weight=0.0
@@ -129,14 +130,14 @@ methylseqnet.datamodule.MethylSeqDataModule.train_dataset_file={
 }
 methylseqnet.datamodule.MethylSeqDataModule.validation_dataset_file={
     "atlas":[
-        "/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/atlas/fold4.h5",
+        "/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/atlas/fold3.h5",
     ],
     "longread":[
-        "/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/gm12878/fold4.h5"
+        "/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/gm12878/fold3.h5"
     ],
 }
 methylseqnet.datamodule.MethylSeqDataModule.batch_size=1
 methylseqnet.datamodule.MethylSeqDataModule.transforms=(@ReverseComplement,@SequenceJitter)
 methylseqnet.datamodule.MethylSeqDataModule.dataset_class=@MultiMethylDataset
-methylseqnet.datamodule.MethylSeqDataModule.epoch_size=200
-methylseqnet.datamodule.MethylSeqDataModule.val_epoch_size=(100,100)
+methylseqnet.datamodule.MethylSeqDataModule.epoch_size=2500
+methylseqnet.datamodule.MethylSeqDataModule.val_epoch_size=(500, 500)
