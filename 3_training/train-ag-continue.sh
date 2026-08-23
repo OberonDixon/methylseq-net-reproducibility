@@ -8,7 +8,7 @@
 #SBATCH --partition=savio3_gpu
 ## SBATCH --qos=savio_lowprio
 #SBATCH --qos=a40_gpu3_normal
-#SBATCH --exclude=n0214.savio3,n0215.savio3
+#SBATCH --exclude=n0214.savio3,n0215.savio3,n0211.savio3
 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=2
@@ -35,6 +35,15 @@ CONFIG_FILES=(
     "$CONFIG_DIR/train/ag-rep1-128bp_factorized_atlas+longread_true.gin"
     "$CONFIG_DIR/train/ag-rep1-128bp_factorized_atlas+longread_imputed.gin"
 )
+
+UNIQUE_IDENTIFIERS=(
+    ""
+    ""
+    ""
+    ""
+    "slurm37760379task4"
+    "slurm37760379task5"
+)
 CONFIG_FILE=${CONFIG_FILES[$SLURM_ARRAY_TASK_ID]}
-UNIQUE_IDENTIFIER="slurm${SLURM_ARRAY_JOB_ID}task${SLURM_ARRAY_TASK_ID}"
+UNIQUE_IDENTIFIER=${UNIQUE_IDENTIFIERS[$SLURM_ARRAY_TASK_ID]}
 methylseqnet-train --config $CONFIG_FILE --unique-identifier $UNIQUE_IDENTIFIER --batch-size 1
