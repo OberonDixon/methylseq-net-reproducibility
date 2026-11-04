@@ -1,0 +1,51 @@
+# Phased (HP1/HP2) long-read dataset over all cell lines with Fiber-seq + Iso-seq (GM12878 + 10 Vollger cell lines).
+# Cell lines are defined in ../longread_cell_lines_phased.tsv. Fiber-seq is depth-corrected, with depth acc+link+nuc
+# (equal to the total coverage of the FIRE pileup). The GM12878 row uses the DL/DR-oriented Iso-seq bed (and the combined CpG track).
+# Same as preprocess_borzoi_longread_cell_lines_phased.gin, but the RNA is also corrected for copy number (rna_depth_correction). Like the
+# Fiber-seq, each haplotype's RNA is corrected by that haplotype's own depth (rna_depth_files of the cell lines TSV, the same files as the
+# Fiber-seq depth), so that haplotype-specific copy number changes are corrected too. The haplotypes are then rescaled to add up to the unphased
+# RNA, which is corrected by the depth of all reads (unphased_rna_depth_files). Written to a separate output directory.
+# UNMASKED: loci where few or none of the reads could be phased are not masked. Where no read was phased, both haplotypes get zero
+# although the unphased RNA is not zero (18-56% of the unphased reads, depending on the cell line), and where only a few were, the
+# haplotype split rests on them. A masked version is expected to be the better default; this one is kept as the comparison.
+
+ref_genome = '/clusterfs/nilah/oberon/genomes/hg38.fa'
+regions_bed = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/reference/borzoi-human-splits/sequences_human.bed'
+cell_lines_tsv = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/configs/longread_cell_lines_phased.tsv'
+output_directory = '/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/longread_cell_lines_phased_rnadepth_unmasked/'
+label_bin_size = 128
+label_num_bins = 4096
+seq_length = 524288
+
+MultiMethylWriter.track_length = %label_num_bins
+MultiMethylWriter.seq_length = %seq_length
+MultiMethylWriter.num_variants = 2
+MultiMethylWriter.mask = True
+
+RegionBedParser.regions_bed = %regions_bed
+RegionBedParser.seq_length = %seq_length
+
+PhasedFiberRNA.sequence_files_by_phase = (%ref_genome,%ref_genome,)
+PhasedFiberRNA.cell_lines_tsv = %cell_lines_tsv
+PhasedFiberRNA.fiberseq_handler_cls = @methylseqnet.builders.DepthCorrectedBigWigLabelHandler
+PhasedFiberRNA.label_bin_size = %label_bin_size
+PhasedFiberRNA.label_num_bins = %label_num_bins
+# 'scale' has no effect while soft_clip=True (the default): values above 'clip' are soft-clipped, not rescaled.
+PhasedFiberRNA.kwargs_by_data_type = {
+    'methylation': {'binarize':False,'threshold':None, 'extend_cpg_sites':True, 'cpg_values_rescale':0.01},
+    'fiberseq': {'normalize_counts_per':1e9,'scale':1, 'clip':32, 'depth_pseudocount':1.0},
+    # depth_ratio_*: numerical limits on the local depth / mean depth ratio that the RNA is divided by, so counts are scaled up by at most 4x
+    # (min 0.25; guards against amplifying zero-depth gaps and noisy bins) and down by at most 32x (max 32; high so that focal amplifications are
+    # corrected, not clipped). depth_exponent=1: expression is assumed to scale linearly with copy number. No smoothing: depth is smooth per bin.
+    'rna': {'normalize_counts_per':1e9,'scale':1, 'clip':384, 'depth_ratio_min':0.25,'depth_ratio_max':32.0,'depth_exponent':1.0},
+}
+PhasedFiberRNA.rna_depth_correction = True
+PhasedFiberRNA.rna_handler_cls = @methylseqnet.builders.MultiBedGzLabelHandler
+PhasedFiberRNA.normalize_phased_to_unphased_counts=True
+PhasedFiberRNA.phase_normalization_pseudocount=1e-6
+
+PreprocessingPipeline.sample_generator = @RegionBedParser()
+PreprocessingPipeline.multitask_io_handler = @PhasedFiberRNA()
+PreprocessingPipeline.dataset_writer_class = @MultiMethylWriter
+PreprocessingPipeline.output_directory = %output_directory
+PreprocessingPipeline.samples_per_batch = 1

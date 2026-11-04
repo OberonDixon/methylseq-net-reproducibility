@@ -4,7 +4,7 @@
 #SBATCH --partition=savio3
 #SBATCH --qos=savio_normal
 #SBATCH --nodes=1
-#SBATCH --time=8:00:00
+#SBATCH --time=16:00:00
 #SBATCH --output=/clusterfs/nilah/oberon/lightning/sbatch_logs/preprocess_methylseqnet_%A_%a.out
 #SBATCH --error=/clusterfs/nilah/oberon/lightning/sbatch_logs/preprocess_methylseqnet_%A_%a.err
 #SBATCH --array=0-7 # Specify the range of array jobs (e.g., 0-2 for 3 configs)

@@ -1,5 +1,9 @@
 """
-Extract TSS positions with counts from IsoSeq collapse output
+Extract TSS positions with counts from IsoSeq collapse output.
+
+The TSS of an isoform is the start of its transcript in the collapse GFF (the end for the - strand), and its count is
+the number of full-length reads associated with it in the abundance file. Also used as a library by
+isoseq_hp_counts_to_bedgz.py (parse_gff, parse_abundance, write_bedgz).
 """
 import argparse
 import subprocess
@@ -35,6 +39,22 @@ def parse_abundance(abundance_path):
             count_dict[fields[0]] = int(fields[1])
     return count_dict
 
+def write_bedgz(entries, output_path):
+    """
+    Write (chrom, tss_pos, id, count, strand) entries as a bgzipped, tabix-indexed bed file with one TSS per row
+    (chrom, tss_pos, tss_pos+1, id, count, strand), sorted by position.
+    """
+    entries = sorted(entries, key=lambda x: (x[0], x[1]))
+    with open(output_path, 'wb') as output_file:
+        bgzip_proc = subprocess.Popen(['bgzip', '-c'], stdin=subprocess.PIPE, stdout=output_file, text=True)
+        for chrom, tss_pos, tid, count, strand in entries:
+            bgzip_proc.stdin.write(f"{chrom}\t{tss_pos}\t{tss_pos+1}\t{tid}\t{count}\t{strand}\n")
+        bgzip_proc.stdin.close()
+        if bgzip_proc.wait() != 0:
+            raise RuntimeError(f"bgzip failed writing {output_path}")
+    subprocess.run(['tabix', '-f', '-p', 'bed', output_path], check=True)
+    return len(entries)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('gff', help='GFF file from IsoSeq collapse')
@@ -52,19 +72,8 @@ def main():
         for tid, (chrom, tss_pos, strand) in tss_dict.items()
         if tid in count_dict
     ]
-    entries.sort(key=lambda x: (x[0], x[1]))
-
-    bgzip_proc = subprocess.Popen(
-        ['bgzip', '-c'], stdin=subprocess.PIPE,
-        stdout=open(args.output, 'wb'), text=True
-    )
-    for chrom, tss_pos, tid, count, strand in entries:
-        bgzip_proc.stdin.write(f"{chrom}\t{tss_pos}\t{tss_pos+1}\t{tid}\t{count}\t{strand}\n")
-    bgzip_proc.stdin.close()
-    bgzip_proc.wait()
-
-    print(f"Wrote {len(entries)} TSS sites to {args.output}", file=sys.stderr)
-    subprocess.run(['tabix', '-p', 'bed', args.output], check=True)
+    num_written = write_bedgz(entries, args.output)
+    print(f"Wrote {num_written} TSS sites to {args.output}", file=sys.stderr)
 
 if __name__ == '__main__':
     main()

@@ -3,11 +3,23 @@ set -euo pipefail
 
 # Pre-haplotagged Vollger Iso-Seq BAMs for the cell lines in vollger_cell_lines (GM12878 is
 # handled at higher depth by prepare_gm12878.sh). The BAMs already carry whatshap HP tags, so
-# there is no haplotagging here: split by HP tag -> isoseq collapse -> tss counts bedgz.
+# there is no haplotagging here: ONE isoseq collapse of all reads -> tss counts bedgz of all reads
+# and of the HP1 and HP2 reads. The reads are attributed to haplotypes after the collapse, using
+# the collapse's read_stat.txt and the BAM's HP tags (see isoseq_tss_beds.sh), so that the unphased
+# and haplotype beds share their TSS positions. (Collapsing the HP1 and HP2 reads separately, as
+# this script used to, moves the TSS of the same reads between the beds.)
+#
+# Each step is skipped when its outputs exist, so the script can be re-run to resume. Environment:
+#   ISOSEQ_DIR      the Iso-Seq dataset directory
+#   BED_DIR         where all three beds of a sample (unphased, HP1, HP2) go, default ${ISOSEQ_DIR}/beds_single_collapse.
+#                   The older ${ISOSEQ_DIR}/beds holds beds from separate collapses of the HP1, HP2 and all reads, whose TSS
+#                   positions do not match; it is left alone, and must not be used as BED_DIR because its existing files would
+#                   make the steps skip
+#   FORCE_COLLAPSE=1  redo isoseq collapse even if complete;  FORCE_BEDS=1  redo the beds, reusing the collapse
 ISOSEQ_DIR="${ISOSEQ_DIR:-/global/scratch/projects/vector_streetslab/oberon/datasets/vollger_isoseq}"
 BAM_DIR="${ISOSEQ_DIR}/bams"
 INTERMEDIATE_DIR="${ISOSEQ_DIR}/intermediate"
-BED_DIR="${ISOSEQ_DIR}/beds"
+BED_DIR="${BED_DIR:-${ISOSEQ_DIR}/beds_single_collapse}"
 LOG_DIR="${INTERMEDIATE_DIR}/logs"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -16,6 +28,9 @@ JOBS="${JOBS:-4}"
 THREADS="${THREADS:-8}"
 
 mkdir -p "$INTERMEDIATE_DIR" "$BED_DIR" "$LOG_DIR"
+
+source "${SCRIPT_DIR}/isoseq_tss_beds.sh"
+check_isoseq_requirements || exit 1
 
 # Iso-Seq sample IDs, one per cell line (fiber-seq ID -> iso-seq ID, from links.txt):
 #   HepG2 PS01307 -> PS01309, Panc1 PS01316 -> PS01318, Caco-2 PS01319 -> PS01321,
@@ -30,48 +45,14 @@ SAMPLES=(
 process_sample() {
     local sample="$1"
     local name="ENCODE-${sample}_untreated_${sample}"
-    local full_bam="${BAM_DIR}/${name}.tagged.bam"
-    [[ -f "$full_bam" ]] || { echo "Error: $full_bam not found." >&2; return 1; }
+    local bam="${BAM_DIR}/${name}.tagged.bam"
+    [[ -f "$bam" ]] || { echo "Error: $bam not found." >&2; return 1; }
 
-    echo "splitting ${sample} by HP tag"
-    # reads without an HP tag are in neither HP bam
-    local hp
-    for hp in 1 2; do
-        local hp_bam="${INTERMEDIATE_DIR}/${name}.HP${hp}.bam"
-        if [[ ! -s "$hp_bam" ]]; then
-            samtools view -@ "$THREADS" -b -d "HP:${hp}" -o "${hp_bam}.part" "$full_bam"
-            mv "${hp_bam}.part" "$hp_bam"
-        fi
-        samtools index -@ "$THREADS" "$hp_bam"
-    done
-    samtools index -@ "$THREADS" "$full_bam"
-
-    echo "isoseq collapse -> bedgz tss counts"
-    local label bam stem bed tag gff abundance
-    for label in "" "HP1" "HP2"; do
-        if [[ -z "$label" ]]; then
-            bam="$full_bam"
-            stem="${INTERMEDIATE_DIR}/${name}.collapsed.no5exon"
-            bed="${BED_DIR}/${name}.no5exon.tss.counts.bed.gz"
-            tag="unphased"
-        else
-            bam="${INTERMEDIATE_DIR}/${name}.${label}.bam"
-            stem="${INTERMEDIATE_DIR}/${name}.${label}.collapsed.no5exon"
-            bed="${BED_DIR}/${name}.${label}.no5exon.tss.counts.bed.gz"
-            tag="$label"
-        fi
-        gff="${stem}.gff"
-        abundance="${stem}.abundance.txt"
-
-        echo "collapsing ${sample} ${tag} isoseq data"
-        isoseq collapse -j "$THREADS" --min-aln-coverage 0.85 "$bam" "$gff"
-
-        echo "${sample} ${tag} metrics for min-aln-coverage 0.85"
-        awk '{sum+=$3} END {print "Total reads:", sum}' "$abundance"
-        wc -l "$abundance"
-
-        python "${SCRIPT_DIR}/isoseq_collapsed_to_bedgz.py" "$gff" "$abundance" "$bed"
-    done
+    make_tss_beds "$bam" \
+        "${INTERMEDIATE_DIR}/${name}.collapsed.no5exon" \
+        "${BED_DIR}/${name}.no5exon.tss.counts.bed.gz" \
+        "${BED_DIR}/${name}.HP1.no5exon.tss.counts.bed.gz" \
+        "${BED_DIR}/${name}.HP2.no5exon.tss.counts.bed.gz"
 }
 
 # Job pool: up to $JOBS samples at once, each logging to its own file. Each job records its

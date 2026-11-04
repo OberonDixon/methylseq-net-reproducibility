@@ -28,9 +28,12 @@ DATASET_SPLITS=(
 
 CONFIG_DIR=$(methylseqnet-repro-path configs)
 
+# The _rnadepth configs also correct the RNA for copy number (rna_depth_correction) and write to separate
+# *_rnadepth output directories (the phased one is the unmasked version, with no masking of poorly phased loci). The plain configs without the correction are
+# preprocess_borzoi_longread_cell_lines_{phased,unphased}.gin.
 CONFIG_FILES=(
-    "$CONFIG_DIR/preprocess/preprocess_borzoi_longread_cell_lines_phased.gin"
-    "$CONFIG_DIR/preprocess/preprocess_borzoi_longread_cell_lines_unphased.gin"
+    "$CONFIG_DIR/preprocess/preprocess_borzoi_longread_cell_lines_phased_rnadepth_unmasked.gin"
+    "$CONFIG_DIR/preprocess/preprocess_borzoi_longread_cell_lines_unphased_rnadepth.gin"
 )
 
 # Get the fold and config for this array task

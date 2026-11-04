@@ -99,6 +99,9 @@ python generate_balanced_translocation.py
 # )
 
 # SCRIPT_DIR="$(dirname "$0")"
+# # make_tss_beds: one isoseq collapse of all reads, then the TSS count beds of all reads and of the HP1 and HP2 reads
+# # (the reads are attributed to haplotypes after the collapse, so that the beds share their TSS positions)
+# source "${SCRIPT_DIR}/isoseq_tss_beds.sh"
 
 # # Loop through paired files
 # for i in "${!VCF_FILES[@]}"; do
@@ -150,63 +153,25 @@ python generate_balanced_translocation.py
     
 #     echo "Haplotagging: $bam_file"
     
-#     # Run whatshap haplotag and split
+#     # Run whatshap haplotag. The tagged BAM keeps all reads (those without a haplotype just have no HP tag) and is
+#     # used for a single collapse; the haplotype beds are made from its HP tags rather than from separate collapses.
+#     tagged_bam="${bam_basename}.tagged.bam"
 #     whatshap haplotag \
 #         --reference "$REFERENCE" \
 #         --ignore-read-groups \
 #         --skip-missing-contigs \
+#         -o "$tagged_bam" \
 #         "$vcf_file" \
-#         "$bam_file" \
-#     | samtools view -@ 4 -h \
-#     | tee >(samtools view -@ 2 -b -d HP:1 -o "${bam_basename}.HP1.bam") \
-#     | samtools view -@ 2 -b -d HP:2 -o "${bam_basename}.HP2.bam"
-
-#     echo "Indexing haplotype BAMs..."
-#     samtools index "${bam_basename}.HP1.bam"
-#     samtools index "${bam_basename}.HP2.bam"
-
-#     echo "Isoseq collapse"
-
-#     isoseq collapse \
-#         --min-aln-coverage 0.85 \
-#         "${bam_file}" \
-#         "${bam_basename}.collapsed.no5exon.gff"
-
-#     echo "Unphased metrics for min-aln-coverage 0.85"
-#     awk '{sum+=$3} END {print "Total reads:", sum}' "${bam_basename}.collapsed.no5exon.abundance.txt"
-#     wc -l "${bam_basename}.collapsed.no5exon.abundance.txt"
-#     cut -f3 "${bam_basename}.collapsed.no5exon.abundance.txt" | sort -n | uniq -c | tail -20
-#     python "${SCRIPT_DIR}/isoseq_collapsed_to_bedgz.py" \
-#         "${bam_basename}.collapsed.no5exon.gff" \
-#         "${bam_basename}.collapsed.no5exon.abundance.txt" \
-#         "${bam_basename}.no5exon.tss.counts.bed.gz"
-
-#     isoseq collapse \
-#         --min-aln-coverage 0.85 \
-#         "${bam_basename}.HP1.bam" \
-#         "${bam_basename}.HP1.collapsed.no5exon.gff"
-
-#     echo "HP1 metrics for min-aln-coverage 0.85"
-#     awk '{sum+=$3} END {print "Total reads:", sum}' "${bam_basename}.HP1.collapsed.no5exon.abundance.txt"
-#     wc -l "${bam_basename}.HP1.collapsed.no5exon.abundance.txt"
-#     cut -f3 "${bam_basename}.HP1.collapsed.no5exon.abundance.txt" | sort -n | uniq -c | tail -20
-#     python "${SCRIPT_DIR}/isoseq_collapsed_to_bedgz.py" \
-#         "${bam_basename}.HP1.collapsed.no5exon.gff" \
-#         "${bam_basename}.HP1.collapsed.no5exon.abundance.txt" \
-#         "${bam_basename}.HP1.no5exon.tss.counts.bed.gz"
-
-#     isoseq collapse \
-#         --min-aln-coverage 0.85 \
-#         "${bam_basename}.HP2.bam" \
-#         "${bam_basename}.HP2.collapsed.no5exon.gff"
-
-#     echo "HP2 metrics for min-aln-coverage 0.85"
-#     awk '{sum+=$3} END {print "Total reads:", sum}' "${bam_basename}.HP2.collapsed.no5exon.abundance.txt"
-#     wc -l "${bam_basename}.HP2.collapsed.no5exon.abundance.txt"
-#     cut -f3 "${bam_basename}.HP2.collapsed.no5exon.abundance.txt" | sort -n | uniq -c | tail -20
-#     python "${SCRIPT_DIR}/isoseq_collapsed_to_bedgz.py" \
-#         "${bam_basename}.HP2.collapsed.no5exon.gff" \
-#         "${bam_basename}.HP2.collapsed.no5exon.abundance.txt" \
+#         "$bam_file"
+# 
+#     echo "Indexing tagged BAM..."
+#     samtools index "$tagged_bam"
+# 
+#     echo "Isoseq collapse and TSS beds (each step is skipped if its outputs exist; see isoseq_tss_beds.sh)"
+#     make_tss_beds "$tagged_bam" \
+#         "${bam_basename}.collapsed.no5exon" \
+#         "${bam_basename}.no5exon.tss.counts.bed.gz" \
+#         "${bam_basename}.HP1.no5exon.tss.counts.bed.gz" \
 #         "${bam_basename}.HP2.no5exon.tss.counts.bed.gz"
     
 #     echo "Completed: $(basename $bam_file)"
