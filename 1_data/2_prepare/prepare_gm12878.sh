@@ -1,24 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# GM12878 (NA12878) Kinnex Iso-Seq. The unoriented BAM from the Vollger et al. download is haplotagged with whatshap,
-# oriented by its segment-adapter tags (orient_bam_dldr.py explains why), and then ONE isoseq collapse of all reads gives the
-# TSS count beds of all reads and of the HP1 and HP2 reads. The reads are attributed to haplotypes after the collapse, using
-# the collapse's read_stat.txt and the BAM's HP tags (see isoseq_tss_beds.sh), so that the unphased and haplotype beds share
-# their TSS positions. (Collapsing the HP1 and HP2 reads separately, as this script used to, moves the TSS of the same reads
-# between the beds.) The same steps as prepare_cell_lines_isoseq.sh for the other cell lines, whose BAMs come already
-# haplotagged; here the haplotagged, oriented BAM has to be made first.
+# GM12878 (NA12878) Kinnex Iso-Seq. The unoriented BAM from the Vollger et al. download is haplotagged with whatshap and oriented
+# by its segment-adapter tags (orient_bam_dldr.py explains why); bam_5prime_tss_beds.py then counts the 5' ends of its reads into
+# the TSS count beds of all reads and of the HP1 and HP2 reads (see its docstring). The same final step as
+# prepare_cell_lines_isoseq.sh for the other cell lines, whose BAMs come already haplotagged; here the haplotagged, oriented BAM
+# has to be made first.
 #
 # Each step is skipped when its outputs exist, so the script can be re-run to resume. The haplotagged BAM (and so the phased VCF
-# and whatshap) is only prepared when something needs it: nothing is done, and no VCF is needed, when the collapse and the three
-# beds are already complete. Environment:
-#   ORIENTED_DIR     where the tagged, oriented BAM and the collapse outputs go; default: the directory next to the
-#                    rna_tracks directory called rna_bams_dldr_oriented, which already holds a collapse of the oriented reads
-#   BED_DIR          where the three beds go, default ${ORIENTED_DIR}/beds_single_collapse. The older beds in ORIENTED_DIR come from
-#                    separate collapses of the HP1, HP2 and all reads, whose TSS positions do not match; they are left alone
+# and whatshap) is only prepared when something needs it: nothing is done, and no VCF is needed, when the three beds are already
+# complete. Environment:
+#   ORIENTED_DIR     where the tagged, oriented BAM goes; default: the directory next to the rna_tracks directory called
+#                    rna_bams_dldr_oriented
+#   BED_DIR          where the three beds go, default ${ORIENTED_DIR}/beds_5prime
 #   VCF_FILE         the phased NA12878 VCF, default ${HAPLOTYPES_DIR}/NA12878.vcf.gz. It needs its .tbi index
-#   FORCE_TAG=1      redo the haplotagging and orientation, and then the beds (reusing the collapse), as the HP tags change
-#   FORCE_COLLAPSE=1 redo isoseq collapse even if complete (and then the beds);  FORCE_BEDS=1  redo the beds, reusing the collapse
+#   FORCE_TAG=1      redo the haplotagging and orientation, and then the beds, as the HP tags change
+#   FORCE_BEDS=1     redo the beds, reusing the tagged BAM
 #   PYTHON           the python to use, which needs pysam (default: python)
 # The HP tags depend on the whatshap version (2.8 tags about 6% more alignments than 2.4 on chr22, with the same haplotype for
 # every alignment that both tag), so the environment's whatshap version should be recorded with the results.
@@ -27,13 +24,25 @@ HAPLOTYPES_DIR=$(methylseqnet-repro-path haplotypes)
 GENOMES_DIR=$(methylseqnet-repro-path genomes)
 VCF_FILE="${VCF_FILE:-$HAPLOTYPES_DIR/NA12878.vcf.gz}"
 ORIENTED_DIR="${ORIENTED_DIR:-$(dirname "$RNA_DIR")/rna_bams_dldr_oriented}"
-BED_DIR="${BED_DIR:-${ORIENTED_DIR}/beds_single_collapse}"
+BED_DIR="${BED_DIR:-${ORIENTED_DIR}/beds_5prime}"
 THREADS="${THREADS:-8}"
+PYTHON="${PYTHON:-python}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 mkdir -p "$ORIENTED_DIR" "$BED_DIR"
-source "${SCRIPT_DIR}/isoseq_tss_beds.sh"
-check_isoseq_requirements || exit 1
+
+# Exit with an error naming the tools that are not on the PATH
+require_tools() {
+    local missing=0 tool
+    for tool in "$@"; do
+        command -v "$tool" >/dev/null 2>&1 || { echo "Error: ${tool} is not on PATH" >&2; missing=1; }
+    done
+    return "$missing"
+}
+"$PYTHON" -c 'import pysam' 2>/dev/null || {
+    echo "Error: ${PYTHON} cannot import pysam; activate the methylseqnet-reproducibility environment or set PYTHON to its python" >&2
+    exit 1
+}
 
 require_vcf() {
     [[ -f "$VCF_FILE" ]] || { echo "Error: the phased NA12878 VCF is needed but not found at $VCF_FILE (set VCF_FILE)." >&2; exit 1; }
@@ -55,16 +64,15 @@ for hp in 1 2; do
 done
 
 TAGGED_BAM="${ORIENTED_DIR}/GM12878.kinnex.tagged.bam"
-COLLAPSE_STEM="${ORIENTED_DIR}/GM12878.kinnex.collapsed.no5exon"
-UNPHASED_BED="${BED_DIR}/GM12878.kinnex.no5exon.tss.counts.bed.gz"
-HP1_BED="${BED_DIR}/GM12878.kinnex.HP1.no5exon.tss.counts.bed.gz"
-HP2_BED="${BED_DIR}/GM12878.kinnex.HP2.no5exon.tss.counts.bed.gz"
+UNPHASED_BED="${BED_DIR}/GM12878.kinnex.tss.counts.bed.gz"
+HP1_BED="${BED_DIR}/GM12878.kinnex.HP1.tss.counts.bed.gz"
+HP2_BED="${BED_DIR}/GM12878.kinnex.HP2.tss.counts.bed.gz"
 
-# New HP tags mean new haplotype beds; the collapse of all reads does not depend on them
+# New HP tags mean new beds
 [[ -z "${FORCE_TAG:-}" ]] || export FORCE_BEDS=1
 
-if tss_beds_up_to_date "$COLLAPSE_STEM" "$UNPHASED_BED" "$HP1_BED" "$HP2_BED"; then
-    echo "the collapse and the three beds are already complete, nothing to do (FORCE_BEDS=1, FORCE_COLLAPSE=1 or FORCE_TAG=1 redo them)"
+if [[ -s "${UNPHASED_BED}.tbi" && -s "${HP1_BED}.tbi" && -s "${HP2_BED}.tbi" && -z "${FORCE_BEDS:-}" ]]; then
+    echo "the three beds are already complete, nothing to do (FORCE_BEDS=1 or FORCE_TAG=1 redo them)"
     exit 0
 fi
 
@@ -98,7 +106,8 @@ else
     rm -f "$HAPLOTAGGED_TMP" "${HAPLOTAGGED_TMP}.bai"
 fi
 
-echo "isoseq collapse -> bedgz tss counts"
+echo "5' end counts -> bedgz tss counts"
 echo "----------------------------------------------"
 
-make_tss_beds "$TAGGED_BAM" "$COLLAPSE_STEM" "$UNPHASED_BED" "$HP1_BED" "$HP2_BED"
+"$PYTHON" "${SCRIPT_DIR}/bam_5prime_tss_beds.py" "$TAGGED_BAM" \
+    --unphased-output "$UNPHASED_BED" --hp1-output "$HP1_BED" --hp2-output "$HP2_BED" --threads "$THREADS"

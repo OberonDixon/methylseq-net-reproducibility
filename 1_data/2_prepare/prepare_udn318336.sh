@@ -99,9 +99,6 @@ python generate_balanced_translocation.py
 # )
 
 # SCRIPT_DIR="$(dirname "$0")"
-# # make_tss_beds: one isoseq collapse of all reads, then the TSS count beds of all reads and of the HP1 and HP2 reads
-# # (the reads are attributed to haplotypes after the collapse, so that the beds share their TSS positions)
-# source "${SCRIPT_DIR}/isoseq_tss_beds.sh"
 
 # # Loop through paired files
 # for i in "${!VCF_FILES[@]}"; do
@@ -154,7 +151,7 @@ python generate_balanced_translocation.py
 #     echo "Haplotagging: $bam_file"
     
 #     # Run whatshap haplotag. The tagged BAM keeps all reads (those without a haplotype just have no HP tag) and is
-#     # used for a single collapse; the haplotype beds are made from its HP tags rather than from separate collapses.
+#     # used for the beds of all reads and of the HP1 and HP2 reads, which are made from its HP tags.
 #     tagged_bam="${bam_basename}.tagged.bam"
 #     whatshap haplotag \
 #         --reference "$REFERENCE" \
@@ -167,12 +164,11 @@ python generate_balanced_translocation.py
 #     echo "Indexing tagged BAM..."
 #     samtools index "$tagged_bam"
 # 
-#     echo "Isoseq collapse and TSS beds (each step is skipped if its outputs exist; see isoseq_tss_beds.sh)"
-#     make_tss_beds "$tagged_bam" \
-#         "${bam_basename}.collapsed.no5exon" \
-#         "${bam_basename}.no5exon.tss.counts.bed.gz" \
-#         "${bam_basename}.HP1.no5exon.tss.counts.bed.gz" \
-#         "${bam_basename}.HP2.no5exon.tss.counts.bed.gz"
+#     echo "TSS count beds from the 5' ends of the reads (see bam_5prime_tss_beds.py)"
+#     python "${SCRIPT_DIR}/bam_5prime_tss_beds.py" "$tagged_bam" \
+#         --unphased-output "${bam_basename}.tss.counts.bed.gz" \
+#         --hp1-output "${bam_basename}.HP1.tss.counts.bed.gz" \
+#         --hp2-output "${bam_basename}.HP2.tss.counts.bed.gz"
     
 #     echo "Completed: $(basename $bam_file)"
 #     echo "---"

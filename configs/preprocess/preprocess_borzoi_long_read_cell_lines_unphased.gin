@@ -1,13 +1,13 @@
 # Unphased long-read dataset over all cell lines with Fiber-seq + Iso-seq (GM12878 + 10 Vollger cell lines).
-# Cell lines are defined in ../longread_cell_lines_unphased.tsv. Fiber-seq is depth-corrected, with depth acc+link+nuc
-# (equal to the total coverage of the FIRE pileup). The GM12878 row uses the DL/DR-oriented Iso-seq bed (and the combined CpG track).
-# Same as preprocess_borzoi_longread_cell_lines_unphased.gin, but the RNA is also corrected for copy number (rna_depth_correction), using the
-# rna_depth_files of the cell lines TSV (the same depth files as the Fiber-seq). Written to a separate output directory.
+# Cell lines are defined in ../long_read_cell_lines_unphased.tsv. Fiber-seq is depth-corrected, with depth acc+link+nuc (equal to the total
+# coverage of the FIRE pileup), and the RNA is corrected for copy number (rna_depth_correction), using the rna_depth_files of the cell lines TSV
+# (the same depth files as the Fiber-seq). The GM12878 row uses the DL/DR-oriented Iso-seq reads (and the combined CpG track). The Iso-seq TSS
+# are the 5' ends of the reads (1_data/2_prepare/bam_5prime_tss_beds.py), hence the 5prime in the output directory.
 
 ref_genome = '/clusterfs/nilah/oberon/genomes/hg38.fa'
 regions_bed = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/reference/borzoi-human-splits/sequences_human.bed'
-cell_lines_tsv = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/configs/longread_cell_lines_unphased.tsv'
-output_directory = '/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/longread_cell_lines_unphased_rnadepth/'
+cell_lines_tsv = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/configs/long_read_cell_lines_unphased.tsv'
+output_directory = '/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/long_read_cell_lines_unphased_5prime/'
 label_bin_size = 128
 label_num_bins = 4096
 seq_length = 524288

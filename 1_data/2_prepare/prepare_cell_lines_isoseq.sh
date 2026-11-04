@@ -1,36 +1,32 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Pre-haplotagged Vollger Iso-Seq BAMs for the cell lines in vollger_cell_lines (GM12878 is
-# handled at higher depth by prepare_gm12878.sh). The BAMs already carry whatshap HP tags, so
-# there is no haplotagging here: ONE isoseq collapse of all reads -> tss counts bedgz of all reads
-# and of the HP1 and HP2 reads. The reads are attributed to haplotypes after the collapse, using
-# the collapse's read_stat.txt and the BAM's HP tags (see isoseq_tss_beds.sh), so that the unphased
-# and haplotype beds share their TSS positions. (Collapsing the HP1 and HP2 reads separately, as
-# this script used to, moves the TSS of the same reads between the beds.)
+# TSS count beds of the Vollger Iso-Seq BAMs for the cell lines in vollger_cell_lines (GM12878 is handled at higher depth by
+# prepare_gm12878.sh). The BAMs already carry whatshap HP tags, so there is no haplotagging here: bam_5prime_tss_beds.py counts
+# the 5' ends of the reads of each BAM into the beds of all reads and of the HP1 and HP2 reads (see its docstring).
 #
-# Each step is skipped when its outputs exist, so the script can be re-run to resume. Environment:
+# A sample whose three beds exist is skipped, so the script can be re-run to resume. Environment:
 #   ISOSEQ_DIR      the Iso-Seq dataset directory
-#   BED_DIR         where all three beds of a sample (unphased, HP1, HP2) go, default ${ISOSEQ_DIR}/beds_single_collapse.
-#                   The older ${ISOSEQ_DIR}/beds holds beds from separate collapses of the HP1, HP2 and all reads, whose TSS
-#                   positions do not match; it is left alone, and must not be used as BED_DIR because its existing files would
-#                   make the steps skip
-#   FORCE_COLLAPSE=1  redo isoseq collapse even if complete;  FORCE_BEDS=1  redo the beds, reusing the collapse
+#   BED_DIR         where the beds go, default ${ISOSEQ_DIR}/beds_5prime
+#   FORCE_BEDS=1    redo the beds even if they exist
+#   PYTHON          the python to use, which needs pysam (default: python)
 ISOSEQ_DIR="${ISOSEQ_DIR:-/global/scratch/projects/vector_streetslab/oberon/datasets/vollger_isoseq}"
 BAM_DIR="${ISOSEQ_DIR}/bams"
-INTERMEDIATE_DIR="${ISOSEQ_DIR}/intermediate"
-BED_DIR="${BED_DIR:-${ISOSEQ_DIR}/beds_single_collapse}"
-LOG_DIR="${INTERMEDIATE_DIR}/logs"
+BED_DIR="${BED_DIR:-${ISOSEQ_DIR}/beds_5prime}"
+LOG_DIR="${ISOSEQ_DIR}/logs"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PYTHON="${PYTHON:-python}"
 
-# Samples processed concurrently, and threads per sample (JOBS * THREADS ~ cores on the node)
+# Samples processed concurrently, and BAM decompression threads per sample
 JOBS="${JOBS:-4}"
-THREADS="${THREADS:-8}"
+THREADS="${THREADS:-4}"
 
-mkdir -p "$INTERMEDIATE_DIR" "$BED_DIR" "$LOG_DIR"
+mkdir -p "$BED_DIR" "$LOG_DIR"
 
-source "${SCRIPT_DIR}/isoseq_tss_beds.sh"
-check_isoseq_requirements || exit 1
+"$PYTHON" -c 'import pysam' 2>/dev/null || {
+    echo "Error: ${PYTHON} cannot import pysam; activate the methylseqnet-reproducibility environment or set PYTHON to its python" >&2
+    exit 1
+}
 
 # Iso-Seq sample IDs, one per cell line (fiber-seq ID -> iso-seq ID, from links.txt):
 #   HepG2 PS01307 -> PS01309, Panc1 PS01316 -> PS01318, Caco-2 PS01319 -> PS01321,
@@ -46,13 +42,17 @@ process_sample() {
     local sample="$1"
     local name="ENCODE-${sample}_untreated_${sample}"
     local bam="${BAM_DIR}/${name}.tagged.bam"
+    local unphased_bed="${BED_DIR}/${name}.tss.counts.bed.gz"
+    local hp1_bed="${BED_DIR}/${name}.HP1.tss.counts.bed.gz"
+    local hp2_bed="${BED_DIR}/${name}.HP2.tss.counts.bed.gz"
     [[ -f "$bam" ]] || { echo "Error: $bam not found." >&2; return 1; }
 
-    make_tss_beds "$bam" \
-        "${INTERMEDIATE_DIR}/${name}.collapsed.no5exon" \
-        "${BED_DIR}/${name}.no5exon.tss.counts.bed.gz" \
-        "${BED_DIR}/${name}.HP1.no5exon.tss.counts.bed.gz" \
-        "${BED_DIR}/${name}.HP2.no5exon.tss.counts.bed.gz"
+    if [[ -s "${unphased_bed}.tbi" && -s "${hp1_bed}.tbi" && -s "${hp2_bed}.tbi" && -z "${FORCE_BEDS:-}" ]]; then
+        echo "the beds of ${name} already exist, skipping (FORCE_BEDS=1 redoes them)"
+        return 0
+    fi
+    "$PYTHON" "${SCRIPT_DIR}/bam_5prime_tss_beds.py" "$bam" \
+        --unphased-output "$unphased_bed" --hp1-output "$hp1_bed" --hp2-output "$hp2_bed" --threads "$THREADS"
 }
 
 # Job pool: up to $JOBS samples at once, each logging to its own file. Each job records its

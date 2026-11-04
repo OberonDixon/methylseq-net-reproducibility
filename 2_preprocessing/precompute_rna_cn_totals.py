@@ -8,10 +8,10 @@ corrects it with: unphased_rna_file with unphased_rna_depth_files for a phased T
 unphased TSV (the two give the same result for a cell line, whose unphased bed and all-reads depth files are the same).
 
 The clamp and exponent must be those of the preprocessing config (depth_ratio_min, depth_ratio_max, depth_exponent in its 'rna'
-kwargs; the defaults here are the ones of the _rnadepth configs), otherwise the preprocessing finds a different cache key and
+kwargs; the defaults here are the ones of the long-read cell-lines preprocessing configs), otherwise the preprocessing finds a different cache key and
 computes the library size again. The same goes for the files themselves: the cache is keyed by their paths, sizes and times.
 
-Usage: python precompute_rna_cn_totals.py configs/longread_cell_lines_phased.tsv [--processes 4] [--cache-dir DIR] [--lines HepG2 K562]
+Usage: python precompute_rna_cn_totals.py configs/long_read_cell_lines_phased.tsv [--processes 4] [--cache-dir DIR] [--lines HepG2 K562]
 """
 import argparse
 import json

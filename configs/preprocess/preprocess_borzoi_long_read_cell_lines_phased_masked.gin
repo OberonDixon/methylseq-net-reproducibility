@@ -1,21 +1,21 @@
 # Phased (HP1/HP2) long-read dataset over all cell lines with Fiber-seq + Iso-seq (GM12878 + 10 Vollger cell lines).
-# Cell lines are defined in ../longread_cell_lines_phased.tsv. Fiber-seq is depth-corrected, with depth acc+link+nuc
-# (equal to the total coverage of the FIRE pileup). The GM12878 row uses the DL/DR-oriented Iso-seq bed (and the combined CpG track).
-# Same as preprocess_borzoi_longread_cell_lines_phased.gin, but the RNA is also corrected for copy number (rna_depth_correction). Like the
-# Fiber-seq, each haplotype's RNA is corrected by that haplotype's own depth (rna_depth_files of the cell lines TSV, the same files as the
-# Fiber-seq depth), so that haplotype-specific copy number changes are corrected too. The haplotypes are then rescaled to average to the unphased
-# RNA, which is corrected by the depth of all reads (unphased_rna_depth_files), so each haplotype's RNA is on the scale of the unphased RNA (counts per
-# billion) and one task can be trained on this dataset and on the unphased one. Written to a separate output directory.
+# Cell lines are defined in ../long_read_cell_lines_phased.tsv. Fiber-seq is depth-corrected, with depth acc+link+nuc
+# (equal to the total coverage of the FIRE pileup). The GM12878 row uses the DL/DR-oriented Iso-seq reads (and the combined CpG track). The
+# Iso-seq TSS are the 5' ends of the reads (1_data/2_prepare/bam_5prime_tss_beds.py), hence the 5prime in the output directory.
+# The RNA is corrected for copy number (rna_depth_correction). Like the Fiber-seq, each haplotype's RNA is corrected by that haplotype's own depth
+# (rna_depth_files of the cell lines TSV, the same files as the Fiber-seq depth), so that haplotype-specific copy number changes are corrected too.
+# The haplotypes are then rescaled to average to the unphased RNA, which is corrected by the depth of all reads (unphased_rna_depth_files), so each
+# haplotype's RNA is on the scale of the unphased RNA (counts per billion) and one task can be trained on this dataset and on the unphased one.
 # MASKED: bins where fewer than min_phased_fraction of the reads could be phased are masked, per task (Fiber-seq, RNA) and per bin, in both
 # haplotypes. Where no read was phased, both haplotypes get zero although the unphased RNA is not zero (18-56% of the unphased reads, depending
 # on the cell line), and where only a few were, the haplotype split rests on them. The loss and the validation metrics leave masked bins out.
 # The fraction phased is relative to the reads of the unphased files of the cell lines TSV (unphased_rna_file, unphased_fiberseq_file).
-# The same as preprocess_borzoi_longread_cell_lines_phased_rnadepth_unmasked.gin otherwise, which is kept as the comparison.
+# Otherwise the same as preprocess_borzoi_long_read_cell_lines_phased_unmasked.gin, which is the comparison.
 
 ref_genome = '/clusterfs/nilah/oberon/genomes/hg38.fa'
 regions_bed = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/reference/borzoi-human-splits/sequences_human.bed'
-cell_lines_tsv = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/configs/longread_cell_lines_phased.tsv'
-output_directory = '/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/longread_cell_lines_phased_rnadepth_masked/'
+cell_lines_tsv = '/clusterfs/nilah/oberon/repos/methylseq-net-reproducibility/configs/long_read_cell_lines_phased.tsv'
+output_directory = '/global/scratch/projects/vector_streetslab/oberon/methylseqnet_manuscript_datasets/long_read_cell_lines_phased_masked_5prime/'
 label_bin_size = 128
 label_num_bins = 4096
 seq_length = 524288
