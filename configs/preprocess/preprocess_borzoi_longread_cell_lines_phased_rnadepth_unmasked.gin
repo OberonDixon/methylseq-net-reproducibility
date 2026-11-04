@@ -3,8 +3,9 @@
 # (equal to the total coverage of the FIRE pileup). The GM12878 row uses the DL/DR-oriented Iso-seq bed (and the combined CpG track).
 # Same as preprocess_borzoi_longread_cell_lines_phased.gin, but the RNA is also corrected for copy number (rna_depth_correction). Like the
 # Fiber-seq, each haplotype's RNA is corrected by that haplotype's own depth (rna_depth_files of the cell lines TSV, the same files as the
-# Fiber-seq depth), so that haplotype-specific copy number changes are corrected too. The haplotypes are then rescaled to add up to the unphased
-# RNA, which is corrected by the depth of all reads (unphased_rna_depth_files). Written to a separate output directory.
+# Fiber-seq depth), so that haplotype-specific copy number changes are corrected too. The haplotypes are then rescaled to average to the unphased
+# RNA, which is corrected by the depth of all reads (unphased_rna_depth_files), so each haplotype's RNA is on the scale of the unphased RNA (counts per
+# billion) and one task can be trained on this dataset and on the unphased one. Written to a separate output directory.
 # UNMASKED: loci where few or none of the reads could be phased are not masked. Where no read was phased, both haplotypes get zero
 # although the unphased RNA is not zero (18-56% of the unphased reads, depending on the cell line), and where only a few were, the
 # haplotype split rests on them. A masked version is expected to be the better default; this one is kept as the comparison.
