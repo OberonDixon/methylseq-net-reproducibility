@@ -8,4 +8,5 @@ From within this directory you can run the following:
 python download_cage.py
 ./download_methylation.sh
 ./download_longread.sh
+./download_screen_ccres.sh
 ```
